@@ -189,32 +189,6 @@ async function dataPage() {
         console.log('error')
       }
 
-      /* const policy = await page.evaluate(() => {
-        try {
-          console.log('try')
-          return Array.from(
-            document.querySelectorAll('div._5zvpp1l > div > div._1y2qkg')
-          ).map((x) => x.textContent)
-        } catch {
-          // console.log('policy number not defined')
-          return ['00: undifined']
-        }
-      })
-
-    var policyNum = policy[0].split('number:')[1]
-
-      try {
-        await page.waitForSelector(
-          '#site-content > div > div:nth-child(1) > div:nth-child(4) > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div.ciubx2o',
-          {
-            waitUntil: 'load',
-            timeout: 50000,
-          }
-        )
-      } catch (err) {
-        console.log('error')
-      }
-      */
       //console.log('*')
 
       const ratings = await page.evaluate(() => {
@@ -229,11 +203,37 @@ async function dataPage() {
         }
       })
 
+      const policy = await page.evaluate(() => {
+        try {
+          console.log('try')
+          return Array.from(
+            document.querySelectorAll('div._5zvpp1l > div > div._1y2qkg')
+          ).map((x) => x.textContent)
+        } catch {
+          // console.log('policy number not defined')
+          return ['00: undifined']
+        }
+      })
+
+      var policyNum = policy[0].split('number:')[1]
+
+      try {
+        await page.waitForSelector(
+          '#site-content > div > div:nth-child(1) > div:nth-child(4) > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div.ciubx2o',
+          {
+            waitUntil: 'load',
+            timeout: 50000,
+          }
+        )
+      } catch (err) {
+        console.log('error')
+      }
+
       const obj = {
         Host_Name: host,
         No: property_num,
         Property_Name: titles[0],
-        //policy_num: policyNum,
+        policy_num: policyNum,
         Cleanliness_Ratings: ratings[0],
         Accuracy_Ratings: ratings[1],
         Communication_Ratings: ratings[2],
